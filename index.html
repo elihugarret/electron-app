@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <h1>Ola ke ase!</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    We are using Node.js <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+    <button id="async-msg">Ping</button><br>
+    <div id="async-reply"></div>
+  </body>
+  <script src="./biwascheme-min.js">
+
+    (define electron (js-eval "require('electron')"))
+    
+    (define ipc (js-ref electron "ipcRenderer"))
+
+    (add-handler! "#async-msg" "click" 
+      (lambda () (js-invoke ipc "send" "asynchronous-message" "ping")))
+
+  </script>
+  <script>
+    const electron = require('electron')
+    electron.ipcRenderer.on('asynchronous-reply', function (event, arg) {
+      const message = `Asynchronous message reply: ${arg}`
+      document.getElementById('async-reply').innerHTML = message
+    })
+  </script>
+</html>
