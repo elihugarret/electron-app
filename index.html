@@ -14,14 +14,10 @@
     <div id="async-reply"></div>
   </body>
   <script src="./biwascheme-min.js">
-
     (define electron (js-eval "require('electron')"))
-    
     (define ipc (js-ref electron "ipcRenderer"))
-
     (add-handler! "#async-msg" "click" 
       (lambda () (js-invoke ipc "send" "asynchronous-message" "ping")))
-
   </script>
   <script>
     const electron = require('electron')
