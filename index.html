@@ -6,7 +6,7 @@
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>Ola ke ase!</h1>
+    <h1>Hola!</h1>
     <!-- All of the Node.js APIs are available in this renderer process. -->
     We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
@@ -16,31 +16,5 @@
     <button id="requ">Click aqui</button>
     <div id="response"></div>
   </body>
-  <script type="text/lua">
-    local ipc = window:require"electron".ipcRenderer
-    local asyncMsgBtn = window.document:getElementById"async-msg"
-    
-    asyncMsgBtn:addEventListener("click", function ()
-      ipc:send("asynchronous-message", "ping")
-    end)
-
-    ipc:on("asynchronous-reply", function (event, arg)
-      local message = "Asynchronous message reply: " .. arg
-      window.document:getElementById"async-reply".innerHTML = message
-    end)
-
-    local requ = window.document:getElementById"requ"
-
-    function request ()
-      local xhttp = window.XMLHttpRequest.new()
-      xhttp.onreadystatechange = function ()
-        if xhttp.readyState == 4 and xhttp.status == 200 then
-          window.document:getElementById"response".innerHTML = xhttp.responseText
-        end
-      end
-      xhttp:open("GET", "http://ateneaweb.tech/php_gen.php?test=hola", true)
-      xhttp:send()
-    end
-    requ:addEventListener("click", request)
-  </script>
+  <script type="application/lua" src="./render.lua"></script>
 </html>
