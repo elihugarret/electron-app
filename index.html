@@ -12,12 +12,19 @@
     and Electron <script>document.write(process.versions.electron)</script>.
     <button id="async-msg">Ping</button><br>
     <div id="async-reply"></div>
+    <button id="requ">Click aqui</button>
+    <div id="response"></div>
   </body>
   <script src="./biwascheme-min.js">
     (define electron (js-eval "require('electron')"))
+    
     (define ipc (js-ref electron "ipcRenderer"))
+    
     (add-handler! "#async-msg" "click" 
       (lambda () (js-invoke ipc "send" "asynchronous-message" "ping")))
+    
+    (add-handler! "#requ" "click" 
+      (set-content! "#response" (http-request "http://ateneaweb.tech/php_gen.php?test=hola")) )
   </script>
   <script>
     const electron = require('electron')
